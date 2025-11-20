@@ -9,6 +9,7 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
   background-color: #fdd9dd;
+  padding: 5px;
 }
 
 nav {
@@ -78,12 +79,13 @@ p {
 }
 
 .imgDiv {
-	width: 250px;
-	height: 300px;
+	width: 100%;
+	max-width: 250px; /* keeps the original visual on large screens */
+	aspect-ratio: 5 / 6; /* matches original 250x300 ratio */
 	border: 1.8px solid black;
 	border-radius: 35px;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
-  	box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.45);
 }
 
 .imgDiv:hover {
@@ -145,12 +147,13 @@ p {
 }
 
 .imgDiv2 {
-	width: 150px;
-	height: 200px;
+	width: 100%;
+	max-width: 150px; /* preserve original look on wide screens */
+	aspect-ratio: 3 / 4; /* matches original 150x200 ratio */
 	border: 1.8px solid black;
 	border-radius: 35px;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
-  	box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.45);
 }
 
 .text-center {
@@ -161,13 +164,14 @@ p {
 	display: flex;
 	justify-content: space-between;
 	width: 80%;
+	gap: 10px;
 	
 }
 
 .sub-section-text {
 	display: flex;
 	align-items: center;
-	width: 70%;
+	width: 75%;
 	
 }
 
@@ -175,14 +179,12 @@ p {
 	display: flex;
 	justify-content: end;
 	gap: 25px;
-	width: 25%;
 }
 
 .sub-section-img-reverse {
 	display: flex;
 	justify-content: start;
 	gap: 25px;
-	width: 25%;
 }
 
 .flex-reverse {
@@ -238,4 +240,150 @@ p {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+/* Responsive breakpoints */
+/* Tablet and smaller */
+
+/* Prevent overlap between text and images on narrow-but-not-mobile screens */
+@media (max-width: 986px) {
+	.sub-section {
+		/* allow children to wrap instead of forcing fixed percentage widths */
+		flex-wrap: wrap;
+		align-items: center;
+		width: 95%;
+		gap: 12px;
+		justify-content: center;
+	}
+
+	.sub-section-text {
+		width: 100%;
+	}
+
+	.sub-section-img,
+	.sub-section-img-reverse {
+		width: 100%;
+		justify-content: center;
+	}
+
+	/* keep reversed sections readable by stacking vertically */
+	.flex-reverse {
+		flex-direction: column;
+	}
+}
+@media (max-width: 900px) {
+	.imageStyle1 {
+		gap: 20px;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.imgDiv {
+		max-width: 300px;
+		/* keep aspect-ratio so height adapts */
+	}
+
+	.imgDiv2 {
+		max-width: 200px;
+	}
+
+	.section1, .imageStyle1 {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.sub-section {
+		flex-direction: column;
+		align-items: center;
+		width: 95%;
+		gap: 18px;
+	}
+
+	.sub-section-text {
+		width: 100%;
+	}
+
+	.sub-section-img,
+	.sub-section-img-reverse {
+		width: 100%;
+		justify-content: center;
+		gap: 12px;
+	}
+
+	/* On narrower tablets, remove row-reverse visual inversion to keep reading order natural */
+	.flex-reverse {
+		flex-direction: column;
+	}
+
+	.contact-me-link {
+		padding: 10px 18px;
+		font-size: 1rem;
+	}
+
+	nav {
+		position: static;
+		display: flex;
+		justify-content: start;
+		margin-top: 12px;
+	}
+}
+
+/* Mobile phones */
+@media (max-width: 600px) {
+	.header1 { font-size: 1.4rem; margin-top: 22px; }
+	.header2 { font-size: 1rem; margin-bottom: 30px; }
+
+	.imageStyle1 {
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.imgDiv, .imgDiv2 {
+		max-width: 60%;
+	}
+
+	.sub-section {
+		width: 95%;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	.sub-section-text { padding: 0 6px; }
+
+	.contact-me-section {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.contact-me-link {
+		padding: 8px 14px;
+		font-size: 0.95rem;
+	}
+
+}
+
+/* Improve overlay behavior for touch devices (no hover) so captions are visible */
+@media (hover: none), (max-width: 600px) {
+  .imgDiv .overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    transition: none;
+  }
+
+  .imgDiv .overlay span {
+    background: rgba(0,0,0,0.45);
+    transform: translateY(0);
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+
+  /* Avoid dimming the image too much on touch devices */
+  .imgDiv:hover .image,
+  .imgDiv .image {
+    filter: none;
+  }
 }
